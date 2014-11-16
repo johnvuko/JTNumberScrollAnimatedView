@@ -1,0 +1,14 @@
+PODS:
+  - JTNumberScrollAnimatedView (1.0)
+
+DEPENDENCIES:
+  - JTNumberScrollAnimatedView (from `../`)
+
+EXTERNAL SOURCES:
+  JTNumberScrollAnimatedView:
+    :path: ../
+
+SPEC CHECKSUMS:
+  JTNumberScrollAnimatedView: cc877f3bcb9bb21cd6bec71b3650e4f39698846c
+
+COCOAPODS: 0.34.4
