@@ -22,7 +22,7 @@ With [CocoaPods](http://cocoapods.org/), add this line to your Podfile.
 
 ### Basic usage
 
-You can use `JTNumberScrollAnimatedView` lile normal view.
+You can use `JTNumberScrollAnimatedView` like a normal view.
 
 ```objective-c
 #import <UIKit/UIKit.h>
