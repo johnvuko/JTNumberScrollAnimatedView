@@ -1,6 +1,6 @@
-JTNumberScrollAnimatedView
-==========================
+# JTNumberScrollAnimatedView
 
+[![CI Status](http://img.shields.io/travis/jonathantribouharet/JTNumberScrollAnimatedView.svg)](https://travis-ci.org/jonathantribouharet/JTNumberScrollAnimatedView)
 ![Version](https://img.shields.io/cocoapods/v/JTNumberScrollAnimatedView.svg)
 ![License](https://img.shields.io/cocoapods/l/JTNumberScrollAnimatedView.svg)
 ![Platform](https://img.shields.io/cocoapods/p/JTNumberScrollAnimatedView.svg)
