@@ -85,3 +85,7 @@ If you change one of this properties, you have to call `setValue` for update the
 ## License
 
 JTNumberScrollAnimatedView is released under the MIT license. See the LICENSE file for more info.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/jonathantribouharet/jtnumberscrollanimatedview/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
