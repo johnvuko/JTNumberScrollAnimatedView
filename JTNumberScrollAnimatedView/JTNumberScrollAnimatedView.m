@@ -49,6 +49,7 @@
     self.minLength = 0;
     self.isAscending = NO;
     
+	self.filler = JTNumberScrollAnimatedViewFillerZero;
     self.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
     self.textColor = [UIColor blackColor];
     
@@ -93,15 +94,43 @@
 
 - (void)createNumbersText
 {
-    NSString *textValue = [self.value stringValue];
-    
-    for(NSInteger i = 0; i < (NSInteger)self.minLength - (NSInteger)[textValue length]; ++i){
-        [numbersText addObject:@"0"];
+	NSString *textValue = self.numberFormatter? [self.numberFormatter stringFromNumber:self.value]:[self.value stringValue];
+
+	if(self.filler == JTNumberScrollAnimatedViewFillerZero) {
+		for(NSUInteger i = 0; i < [self.prefix length]; ++i){
+			[numbersText addObject:[self.prefix substringWithRange:NSMakeRange(i, 1)]];
+		}
+	}
+	
+    for(NSInteger i = 0; i < (NSInteger)self.minLength - (NSInteger)[textValue length] - (NSInteger)[self.prefix length]- (NSInteger)[self.suffix length] ; ++i){
+		switch (self.filler) {
+			case JTNumberScrollAnimatedViewFillerSpace:
+				[numbersText addObject:@" "];
+				break;
+				
+			case JTNumberScrollAnimatedViewFillerZero:
+				
+			default:
+				[numbersText addObject:@"0"];
+				break;
+		}
+		
     }
-    
+
+	if(self.filler == JTNumberScrollAnimatedViewFillerSpace) {
+		for(NSUInteger i = 0; i < [self.prefix length]; ++i){
+			[numbersText addObject:[self.prefix substringWithRange:NSMakeRange(i, 1)]];
+		}
+	}
+	
     for(NSUInteger i = 0; i < [textValue length]; ++i){
         [numbersText addObject:[textValue substringWithRange:NSMakeRange(i, 1)]];
     }
+	
+	for(NSUInteger i = 0; i < [self.suffix length]; ++i){
+		[numbersText addObject:[self.suffix substringWithRange:NSMakeRange(i, 1)]];
+	}
+	
 }
 
 - (void)createScrollLayers
