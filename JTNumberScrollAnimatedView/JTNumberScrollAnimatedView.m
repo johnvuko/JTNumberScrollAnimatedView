@@ -62,11 +62,8 @@
         _textColor = textColor;
     }
 
-    [scrollLabels enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:[UILabel class]]) {
-            UILabel *label = (UILabel *)obj;
-            label.textColor = textColor;
-        }
+    [scrollLabels enumerateObjectsUsingBlock:^(UILabel  *_Nonnull label, NSUInteger idx, BOOL * _Nonnull stop) {
+        label.textColor = textColor;
     }];
 }
 
@@ -76,11 +73,8 @@
         _font = font;
     }
     
-    [scrollLabels enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:[UILabel class]]) {
-            UILabel *label = (UILabel *)obj;
-            label.font = font;
-        }
+    [scrollLabels enumerateObjectsUsingBlock:^(UILabel  *_Nonnull label, NSUInteger idx, BOOL * _Nonnull stop) {
+        label.font = font;
     }];
 }
 
@@ -178,6 +172,7 @@
 - (UILabel *)createLabel:(NSString *)text
 {
     UILabel *view = [UILabel new];
+    
     view.textColor = self.textColor;
     view.font = self.font;
     view.textAlignment = NSTextAlignmentCenter;
