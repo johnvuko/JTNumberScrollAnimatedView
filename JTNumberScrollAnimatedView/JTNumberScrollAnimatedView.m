@@ -150,7 +150,7 @@
     NSMutableArray *textForScroll = [NSMutableArray new];
     
     for(NSUInteger i = 0; i < self.density + 1; ++i){
-        [textForScroll addObject:[NSString stringWithFormat:@"%ld", (number + i) % 10]];
+        [textForScroll addObject:[NSString stringWithFormat:@"%lu", (number + i) % 10]];
     }
     
     [textForScroll addObject:numberText];
