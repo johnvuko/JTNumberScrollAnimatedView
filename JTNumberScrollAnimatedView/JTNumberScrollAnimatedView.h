@@ -18,6 +18,7 @@
 @property (assign, nonatomic) NSUInteger density;
 @property (assign, nonatomic) NSUInteger minLength;
 @property (assign, nonatomic) BOOL isAscending;
+@property (strong, nonatomic) NSMutableArray *numbersText;
 
 - (void)startAnimation;
 - (void)stopAnimation;

@@ -8,7 +8,6 @@
 #import "JTNumberScrollAnimatedView.h"
 
 @interface JTNumberScrollAnimatedView(){
-    NSMutableArray *numbersText;
     NSMutableArray *scrollLayers;
     NSMutableArray *scrollLabels;
 }
@@ -51,7 +50,7 @@
     self.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
     self.textColor = [UIColor blackColor];
     
-    numbersText = [NSMutableArray new];
+    self.numbersText = [NSMutableArray new];
     scrollLayers = [NSMutableArray new];
     scrollLabels = [NSMutableArray new];
 }
@@ -104,7 +103,7 @@
         [layer removeFromSuperlayer];
     }
     
-    [numbersText removeAllObjects];
+    [self.numbersText removeAllObjects];
     [scrollLayers removeAllObjects];
     [scrollLabels removeAllObjects];
     
@@ -117,29 +116,29 @@
     NSString *textValue = [self.value stringValue];
     
     for(NSInteger i = 0; i < (NSInteger)self.minLength - (NSInteger)[textValue length]; ++i){
-        [numbersText addObject:@"0"];
+        [self.numbersText addObject:@"0"];
     }
     
     for(NSUInteger i = 0; i < [textValue length]; ++i){
-        [numbersText addObject:[textValue substringWithRange:NSMakeRange(i, 1)]];
+        [self.numbersText addObject:[textValue substringWithRange:NSMakeRange(i, 1)]];
     }
 }
 
 - (void)createScrollLayers
 {
-    CGFloat width = roundf(CGRectGetWidth(self.frame) / numbersText.count);
+    CGFloat width = roundf(CGRectGetWidth(self.frame) / self.numbersText.count);
     CGFloat height = CGRectGetHeight(self.frame);
     
-    for(NSUInteger i = 0; i < numbersText.count; ++i){
+    for(NSUInteger i = 0; i < self.numbersText.count; ++i){
         CAScrollLayer *layer = [CAScrollLayer layer];
         layer.frame = CGRectMake(roundf(i * width), 0, width, height);
         [scrollLayers addObject:layer];
         [self.layer addSublayer:layer];
     }
     
-    for(NSUInteger i = 0; i < numbersText.count; ++i){
+    for(NSUInteger i = 0; i < self.numbersText.count; ++i){
         CAScrollLayer *layer = scrollLayers[i];
-        NSString *numberText = numbersText[i];
+        NSString *numberText = self.numbersText[i];
         [self createContentForLayer:layer withNumberText:numberText];
     }
 }
@@ -184,7 +183,7 @@
 
 - (void)createAnimations
 {
-    CFTimeInterval duration = self.duration - ([numbersText count] * self.durationOffset);
+    CFTimeInterval duration = self.duration - ([self.numbersText count] * self.durationOffset);
     CFTimeInterval offset = 0;
     
     for(CALayer *scrollLayer in scrollLayers){
