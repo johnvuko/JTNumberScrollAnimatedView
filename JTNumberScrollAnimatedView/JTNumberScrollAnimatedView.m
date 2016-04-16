@@ -12,7 +12,6 @@
     NSMutableArray *scrollLayers;
     NSMutableArray *scrollLabels;
 }
-@property (nonatomic, strong) UILabel *view;
 @end
 
 @implementation JTNumberScrollAnimatedView
@@ -63,7 +62,12 @@
         _textColor = textColor;
     }
 
-    self.view.textColor = textColor;
+    [scrollLabels enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[UILabel class]]) {
+            UILabel *label = (UILabel *)obj;
+            label.textColor = textColor;
+        }
+    }];
 }
 
 - (void)setFont:(UIFont *)font
@@ -71,8 +75,13 @@
     if (_font != font) {
         _font = font;
     }
-
-    self.view.font = font;
+    
+    [scrollLabels enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[UILabel class]]) {
+            UILabel *label = (UILabel *)obj;
+            label.font = font;
+        }
+    }];
 }
 
 - (void)setValue:(NSNumber *)value
@@ -168,14 +177,14 @@
 
 - (UILabel *)createLabel:(NSString *)text
 {
-    self.view = [UILabel new];
-    self.view.textColor = self.textColor;
-    self.view.font = self.font;
-    self.view.textAlignment = NSTextAlignmentCenter;
+    UILabel *view = [UILabel new];
+    view.textColor = self.textColor;
+    view.font = self.font;
+    view.textAlignment = NSTextAlignmentCenter;
     
-    self.view.text = text;
+    view.text = text;
     
-    return self.view;
+    return view;
 }
 
 - (void)createAnimations
