@@ -188,15 +188,15 @@
     CFTimeInterval duration = self.duration - ([numbersText count] * self.durationOffset);
     __block CFTimeInterval offset = 0;
     [scrollLayers enumerateObjectsUsingBlock:^(CALayer *scrollLayer, NSUInteger idx, BOOL * _Nonnull stop) {
-        CGFloat maxY = [[scrollLayer.sublayers lastObject] frame].origin.y;
+        CGFloat maxHeight = [[scrollLayer.sublayers lastObject] frame].size.height;
         CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position.y"];
         animation.duration = duration + offset;
-        animation.beginTime = CACurrentMediaTime() + idx * self.duration/self.minLength;
-        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+        animation.beginTime = CACurrentMediaTime() + idx;
+        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
         animation.removedOnCompletion = NO;
         animation.fillMode = kCAFillModeBoth;
-        animation.fromValue = @(-maxY);
-        animation.toValue = @0;
+        animation.fromValue = @(-maxHeight);
+        animation.toValue = @(maxHeight);
         [scrollLayer addAnimation:animation forKey:@"JTNumberScrollAnimatedView"];
         offset += self.durationOffset;
     }];
