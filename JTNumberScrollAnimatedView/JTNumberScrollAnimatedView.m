@@ -185,19 +185,22 @@
 
 - (void)createAnimations
 {
-    CFTimeInterval duration = self.duration - ([numbersText count] * self.durationOffset);
-    __block CFTimeInterval offset = 0;
     [scrollLayers enumerateObjectsUsingBlock:^(CALayer *scrollLayer, NSUInteger idx, BOOL * _Nonnull stop) {
+        [CATransaction begin];
+        scrollLayer.hidden = YES;
         CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position.y"];
-        animation.duration = duration + offset;
-        animation.beginTime = CACurrentMediaTime() + idx;
-        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+        animation.duration = 1;
+        animation.beginTime = CACurrentMediaTime() + idx * self.duration / self.minLength;
+        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
         animation.removedOnCompletion = NO;
         animation.fillMode = kCAFillModeBoth;
         animation.fromValue = @(-1);
         animation.toValue = 0;
+        [CATransaction setCompletionBlock:^{
+            scrollLayer.hidden = NO;
+        }];
         [scrollLayer addAnimation:animation forKey:@"JTNumberScrollAnimatedView"];
-        offset += self.durationOffset;
+        [CATransaction commit];
     }];
 }
 
