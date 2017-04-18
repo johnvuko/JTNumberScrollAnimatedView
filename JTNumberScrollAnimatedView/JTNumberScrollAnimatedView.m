@@ -12,7 +12,6 @@
     NSMutableArray *scrollLayers;
     NSMutableArray *scrollLabels;
 }
-
 @end
 
 @implementation JTNumberScrollAnimatedView
@@ -55,6 +54,28 @@
     numbersText = [NSMutableArray new];
     scrollLayers = [NSMutableArray new];
     scrollLabels = [NSMutableArray new];
+}
+
+- (void)setTextColor:(UIColor *)textColor
+{
+    if (_textColor != textColor) {
+        _textColor = textColor;
+    }
+    
+    [scrollLabels enumerateObjectsUsingBlock:^(UILabel  *_Nonnull label, NSUInteger idx, BOOL * _Nonnull stop) {
+        label.textColor = textColor;
+    }];
+}
+
+- (void)setFont:(UIFont *)font
+{
+    if (_font != font) {
+        _font = font;
+    }
+    
+    [scrollLabels enumerateObjectsUsingBlock:^(UILabel  *_Nonnull label, NSUInteger idx, BOOL * _Nonnull stop) {
+        label.font = font;
+    }];
 }
 
 - (void)setValue:(NSNumber *)value
@@ -102,6 +123,8 @@
     for(NSUInteger i = 0; i < [textValue length]; ++i){
         [numbersText addObject:[textValue substringWithRange:NSMakeRange(i, 1)]];
     }
+    
+    self.text = [numbersText componentsJoinedByString:@""];
 }
 
 - (void)createScrollLayers
@@ -133,7 +156,7 @@
     }
     
     [textForScroll addObject:numberText];
-
+    
     if(!self.isAscending){
         textForScroll = [[[textForScroll reverseObjectEnumerator] allObjects] mutableCopy];
     }
@@ -157,35 +180,28 @@
     view.textAlignment = NSTextAlignmentCenter;
     
     view.text = text;
-    
     return view;
 }
 
 - (void)createAnimations
 {
-    CFTimeInterval duration = self.duration - ([numbersText count] * self.durationOffset);
-    CFTimeInterval offset = 0;
-    
-    for(CALayer *scrollLayer in scrollLayers){
-        CGFloat maxY = [[scrollLayer.sublayers lastObject] frame].origin.y;
-        
-        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"sublayerTransform.translation.y"];
-        animation.duration = duration + offset;
-        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-        
-        if(self.isAscending){
-            animation.fromValue = [NSNumber numberWithFloat:-maxY];
-            animation.toValue = @0;
-        }
-        else{
-            animation.fromValue = @0;
-            animation.toValue = [NSNumber numberWithFloat:-maxY];
-        }
-        
+    [scrollLayers enumerateObjectsUsingBlock:^(CALayer *scrollLayer, NSUInteger idx, BOOL * _Nonnull stop) {
+        [CATransaction begin];
+        scrollLayer.hidden = YES;
+        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position.y"];
+        animation.duration = 1;
+        animation.beginTime = CACurrentMediaTime() + idx * self.duration / self.minLength;
+        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
+        animation.removedOnCompletion = NO;
+        animation.fillMode = kCAFillModeBoth;
+        animation.fromValue = @(-1);
+        animation.toValue = 0;
+        [CATransaction setCompletionBlock:^{
+            scrollLayer.hidden = NO;
+        }];
         [scrollLayer addAnimation:animation forKey:@"JTNumberScrollAnimatedView"];
-        
-        offset += self.durationOffset;
-    }
+        [CATransaction commit];
+    }];
 }
 
 @end
