@@ -18,7 +18,8 @@
     [super viewDidLoad];
     
     self.animatedView.textColor = [UIColor whiteColor];
-    self.animatedView.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:42];
+    self.animatedView.singleUnitWidthForAlignmentCenter = 10;
+    self.animatedView.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:15];
     
     self.animatedView.minLength = 3;
 }

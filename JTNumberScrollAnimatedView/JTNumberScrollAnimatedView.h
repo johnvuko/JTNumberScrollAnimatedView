@@ -18,6 +18,8 @@
 @property (assign, nonatomic) NSUInteger density;
 @property (assign, nonatomic) NSUInteger minLength;
 @property (assign, nonatomic) BOOL isAscending;
+@property (assign, nonatomic) CGFloat singleUnitWidthForAlignmentCenter;
+
 
 - (void)startAnimation;
 - (void)stopAnimation;
