@@ -65,11 +65,11 @@ Each caracter have its own `column`.
 
 - `textColor`
 - `font`
-- `duration`
-- `durationOffset`, delay between the end of the animation of each column
-- `density`, number of characters by column for the animation
-- `minLength`, you can force the minimum count of columns
-- `isAscending`, the direction of the scroll
+- `duration`, default to `1.5`
+- `durationOffset`, delay between the end of the animation of each column, default to `0.2`
+- `density`, number of characters added by column for the animation, default to `5`
+- `minLength`, you can force the minimum count of columns, default to `0`
+- `isAscending`, the direction of the scroll, default to `NO`
 
 If you change one of this properties, you have to call `setValue` for update the view.
 
