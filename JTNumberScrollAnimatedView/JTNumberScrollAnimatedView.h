@@ -6,10 +6,19 @@
 //
 
 #import <UIKit/UIKit.h>
+typedef enum : NSUInteger {
+    JTNumberScrollAnimatedViewFillerZero,
+    JTNumberScrollAnimatedViewFillerSpace,
+} JTNumberScrollAnimatedViewFillers;
 
 @interface JTNumberScrollAnimatedView : UIView
 
+@property (strong, nonatomic) NSNumberFormatter *numberFormatter;
 @property (strong, nonatomic) NSNumber *value;
+@property (strong, nonatomic) NSString *prefix;
+@property (strong, nonatomic) NSString *suffix;
+
+@property (nonatomic) JTNumberScrollAnimatedViewFillers filler;
 
 @property (strong, nonatomic) UIColor *textColor;
 @property (strong, nonatomic) UIFont *font;
