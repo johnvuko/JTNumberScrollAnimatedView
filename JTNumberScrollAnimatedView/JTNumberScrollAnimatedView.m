@@ -106,12 +106,20 @@
 
 - (void)createScrollLayers
 {
-    CGFloat width = roundf(CGRectGetWidth(self.frame) / numbersText.count);
+    BOOL allowAlignmentCenter = NO;
+    CGFloat totalWidth = CGRectGetWidth(self.frame);
+    CGFloat width = roundf(totalWidth / numbersText.count);
+    if (self.singleUnitWidthForAlignmentCenter > 0 && self.singleUnitWidthForAlignmentCenter * numbersText.count <= totalWidth) {
+        width = self.singleUnitWidthForAlignmentCenter;
+        allowAlignmentCenter = YES;
+    }
+    
     CGFloat height = CGRectGetHeight(self.frame);
     
     for(NSUInteger i = 0; i < numbersText.count; ++i){
         CAScrollLayer *layer = [CAScrollLayer layer];
-        layer.frame = CGRectMake(roundf(i * width), 0, width, height);
+        CGFloat layerX = allowAlignmentCenter ? (totalWidth - numbersText.count * width) / 2 + i * width : roundf(i * width);
+        layer.frame = CGRectMake(layerX, 0, width, height);
         [scrollLayers addObject:layer];
         [self.layer addSublayer:layer];
     }

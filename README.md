@@ -70,6 +70,8 @@ Each caracter have its own `column`.
 - `density`, number of characters added by column for the animation, default to `5`
 - `minLength`, you can force the minimum count of columns, default to `0`
 - `isAscending`, the direction of the scroll, default to `NO`
+- `singleUnitWidthForAlignmentCenter`, you can force the width for each unit to make it like a NSTextAlignmentCenter label  
+
 
 If you change one of this properties, you have to call `setValue` for update the view.
 
